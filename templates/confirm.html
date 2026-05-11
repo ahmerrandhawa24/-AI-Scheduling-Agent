@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header success">
+            <div class="success-icon">✅</div>
+            <h1>Meeting Confirmed!</h1>
+            <p>Your meeting has been successfully scheduled</p>
+        </div>
+
+        <!-- Booking Details -->
+        <div class="card">
+            <h2>Booking Details</h2>
+
+            <div class="detail-row">
+                <span class="detail-label">👤 Name</span>
+                <span class="detail-value">{{ name }}</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">📅 Slot</span>
+                <span class="detail-value highlight">{{ slot }}</span>
+            </div>
+
+            <div class="detail-row">
+                <span class="detail-label">🔖 Booking ID</span>
+                <span class="detail-value">#{{ booking_id }}</span>
+            </div>
+
+            <!-- AI Explanation Box -->
+            <div class="ai-box">
+                <p class="ai-title">🤖 Why this slot?</p>
+                <p class="ai-text">{{ explanation }}</p>
+            </div>
+
+            <!-- Calendar Link -->
+            {% if calendar_link %}
+            <a href="{{ calendar_link }}" target="_blank" class="btn-primary">
+                📅 View in Google Calendar
+            </a>
+            {% endif %}
+
+            <!-- Back Button -->
+            <a href="/" class="btn-secondary">
+                Book Another Meeting
+            </a>
+
+        </div>
+
+        <!-- Email Notice -->
+        <div class="notice">
+            📧 A confirmation email has been sent to your inbox
+        </div>
+
+    </div>
+
+</body>
+</html>

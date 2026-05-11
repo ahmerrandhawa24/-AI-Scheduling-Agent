@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container wide">
+
+        <!-- Header -->
+        <div class="header">
+            <h1>Admin Dashboard</h1>
+            <p>All bookings managed here</p>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <h3>{{ bookings|length }}</h3>
+                <p>Total Bookings</p>
+            </div>
+            <div class="stat-card green">
+                <h3>{{ bookings|selectattr('5', 'equalto', 'confirmed')|list|length }}</h3>
+                <p>Confirmed</p>
+            </div>
+            <div class="stat-card red">
+                <h3>{{ bookings|selectattr('5', 'equalto', 'cancelled')|list|length }}</h3>
+                <p>Cancelled</p>
+            </div>
+        </div>
+
+        <!-- Bookings Table -->
+        <div class="card">
+            <h2>All Bookings</h2>
+
+            {% if bookings %}
+            <div class="table-wrapper">
+                <table class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Purpose</th>
+                            <th>Slot</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for b in bookings %}
+                        <tr class="{{ 'cancelled-row' if b[5] == 'cancelled' else '' }}">
+                            <td>#{{ b[0] }}</td>
+                            <td>{{ b[1] }}</td>
+                            <td>{{ b[2] }}</td>
+                            <td>{{ b[3] }}</td>
+                            <td><strong>{{ b[4] }}</strong></td>
+                            <td>
+                                <span class="badge {{ 'badge-green' if b[5] == 'confirmed' else 'badge-red' }}">
+                                    {{ b[5] }}
+                                </span>
+                            </td>
+                            <td>{{ b[6].strftime('%b %d, %Y %I:%M %p') }}</td>
+                            <td>
+                                {% if b[5] == 'confirmed' %}
+                                <a href="/cancel/{{ b[0] }}"
+                                   onclick="return confirm('Cancel this booking?')"
+                                   class="btn-cancel">
+                                    Cancel
+                                </a>
+                                {% else %}
+                                <span class="text-muted">—</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% else %}
+            <div class="empty-state">
+                <p>📭 No bookings yet.</p>
+                <a href="/" class="btn-primary">Book First Meeting</a>
+            </div>
+            {% endif %}
+
+        </div>
+
+        <a href="/" class="btn-secondary">← Back to Booking Form</a>
+
+    </div>
+
+</body>
+</html>

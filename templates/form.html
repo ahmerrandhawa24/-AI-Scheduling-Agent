@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Meeting</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header">
+            <h1>AI Scheduling Agent</h1>
+            <p>Fill in your details and our AI will pick the best meeting slot for you</p>
+        </div>
+
+        <!-- Error message if any -->
+        {% if error %}
+        <div class="error-box">
+            ⚠️ {{ error }}
+        </div>
+        {% endif %}
+
+        <!-- Booking Form -->
+        <div class="card">
+            <form action="/book" method="POST">
+
+                <!-- Name -->
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+                </div>
+
+                <!-- Meeting Purpose -->
+                <div class="form-group">
+                    <label for="purpose">Meeting Purpose</label>
+                    <input
+                        type="text"
+                        id="purpose"
+                        name="purpose"
+                        placeholder="e.g. Project discussion, Interview, Demo"
+                        required
+                    >
+                </div>
+
+                <!-- Time Preference -->
+                <div class="form-group">
+                    <label for="preference">Time Preference</label>
+                    <select id="preference" name="preference" required>
+                        <option value="">Select preference</option>
+                        <option value="morning">Morning (9am - 12pm)</option>
+                        <option value="afternoon">Afternoon (12pm - 4pm)</option>
+                        <option value="evening">Evening (4pm - 6pm)</option>
+                        <option value="any">Any time</option>
+                    </select>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="btn-primary">
+                    🤖 Find Best Slot with AI
+                </button>
+
+            </form>
+        </div>
+
+        <!-- How it works -->
+        <div class="steps">
+            <div class="step">
+                <span class="step-icon">📝</span>
+                <p>Fill the form</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+                <span class="step-icon">🤖</span>
+                <p>AI picks slot</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+                <span class="step-icon">📅</span>
+                <p>Calendar booked</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step">
+                <span class="step-icon">📧</span>
+                <p>Email sent</p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
